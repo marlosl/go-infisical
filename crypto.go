@@ -30,11 +30,10 @@ func Encrypt(text string, secret string) (*EncryptionData, error) {
 	key := []byte(secret)
 	plaintext := []byte(text)
 
-	cipher, err := crypto.EncryptSymmetric(plaintext, key)
+	cipher, err := crypto.Encrypt(plaintext, key)
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%x\n", cipher)
 
 	encryptionData := &EncryptionData{
 		Ciphertext: base64.StdEncoding.EncodeToString(cipher.CipherText),
@@ -63,7 +62,7 @@ func Decrypt(ciphertext string, iv string, tag string, secret string) (string, e
 		return "", err
 	}
 
-	plaintext, err := crypto.DecryptSymmetric(secretKey, decodedCiphertext, decodedTag, decodedIV)
+	plaintext, err := crypto.Decrypt(secretKey, decodedCiphertext, decodedTag, decodedIV)
 	if err != nil {
 		return "", err
 	}
