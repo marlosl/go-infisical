@@ -3,11 +3,9 @@ package infisical
 import (
 	"encoding/json"
 	"net/http"
-	"os"
 	"strings"
 
 	"github.com/marlosl/go-infisical/cache"
-	"github.com/marlosl/go-infisical/consts"
 )
 
 type InfisicalClient struct {
@@ -20,22 +18,23 @@ type InfisicalClient struct {
 	workspace          string
 	environment        string
 	secretType         string
-	client             *http.Client
+	httpClient         *http.Client
 	cache              *cache.Cache
 }
 
-func CreateInfisicalClient() (*InfisicalClient, error) {
+func NewClient(serviceToken string) (*InfisicalClient, error) {
 	var err error
 	c := &InfisicalClient{}
 
-	c.client = &http.Client{}
+	c.serviceToken = serviceToken
+	c.httpClient = &http.Client{}
 
 	c.cache, err = cache.NewCache()
 	if err != nil {
 		return nil, err
 	}
 
-	c.InitServiceToken()
+	c.InitServiceTokenSecret()
 
 	err = c.InitService()
 	if err != nil {
@@ -45,17 +44,11 @@ func CreateInfisicalClient() (*InfisicalClient, error) {
 	return c, nil
 }
 
-func (c *InfisicalClient) InitServiceToken() {
-	c.serviceToken = serviceToken
-	token := os.Getenv(consts.InfisicalServiceToken)
-
-	if len(token) > 0 {
-		c.serviceToken = token
-	}
-
+func (c *InfisicalClient) InitServiceTokenSecret() {
 	if len(c.serviceToken) > 0 {
-		c.serviceTokenSecret = c.serviceToken[strings.LastIndex(c.serviceToken, ".")+1:]
+		return
 	}
+	c.serviceTokenSecret = c.serviceToken[strings.LastIndex(c.serviceToken, ".")+1:]
 }
 
 func (c *InfisicalClient) InitService() error {
@@ -93,7 +86,7 @@ func (c *InfisicalClient) InitService() error {
 	}
 
 	c.projectKey = projectKey
-	c.secretType = PersonalSecret
+	c.secretType = SecretType
 
 	return nil
 }

@@ -5,8 +5,10 @@ import (
 	"crypto/cipher"
 	"crypto/rand"
 	"io"
+)
 
-	"golang.org/x/crypto/nacl/box"
+const (
+	BlocksizeBytes = 16
 )
 
 type EncryptionResult struct {
@@ -48,7 +50,7 @@ func Encrypt(plaintext []byte, key []byte) (result EncryptionResult, err error) 
 		return EncryptionResult{}, err
 	}
 
-	aesgcm, err := cipher.NewGCMWithNonceSize(block, 16)
+	aesgcm, err := cipher.NewGCMWithNonceSize(block, BlocksizeBytes)
 	if err != nil {
 		return EncryptionResult{}, err
 	}
@@ -60,9 +62,9 @@ func Encrypt(plaintext []byte, key []byte) (result EncryptionResult, err error) 
 
 	ciphertext := aesgcm.Seal(nil, nonce, plaintext, nil)
 
-	ciphertextOnly := ciphertext[:len(ciphertext)-16]
+	ciphertextOnly := ciphertext[:len(ciphertext)-BlocksizeBytes]
 
-	authTag := ciphertext[len(ciphertext)-16:]
+	authTag := ciphertext[len(ciphertext)-BlocksizeBytes:]
 
 	return EncryptionResult{
 		CipherText: ciphertextOnly,

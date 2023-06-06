@@ -2,22 +2,13 @@ package infisical
 
 import (
 	"encoding/base64"
-	"fmt"
 
 	"github.com/marlosl/go-infisical/crypto"
 )
 
 const (
-	BaseURL        = "https://app.infisical.com"
-	BlocksizeBytes = 16
-	SharedSecret   = "shared"
-	PersonalSecret = "personal"
-	secretType     = "personal"
-)
-
-var (
-	serviceToken       = ""
-	serviceTokenSecret = ""
+	BaseURL    = "https://app.infisical.com"
+	SecretType = "personal"
 )
 
 type EncryptionData struct {

@@ -16,7 +16,7 @@ func (c *InfisicalClient) GetSecret(secretKey string) (string, error) {
 
 	req.URL.RawQuery = q.Encode()
 
-	res, err := c.client.Do(req)
+	res, err := c.httpClient.Do(req)
 	if err != nil {
 		return "", err
 	}
@@ -68,7 +68,7 @@ func (c *InfisicalClient) GetSecrets() (map[string]string, error) {
 
 	req.URL.RawQuery = q.Encode()
 
-	res, err := c.client.Do(req)
+	res, err := c.httpClient.Do(req)
 	if err != nil {
 		return nil, err
 	}

@@ -48,7 +48,7 @@ func (c *InfisicalClient) UpdateSecret(secretKey, secretValue, secretComment str
 	req.Header.Set("Authorization", "Bearer "+c.serviceToken)
 	req.Header.Set("Content-Type", "application/json")
 
-	res, err := c.client.Do(req)
+	res, err := c.httpClient.Do(req)
 	if err != nil {
 		return err
 	}

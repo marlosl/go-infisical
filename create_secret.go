@@ -50,7 +50,7 @@ func (c *InfisicalClient) CreateSecret(secretKey, secretValue, secretComment str
 	req.Header.Set("Authorization", "Bearer "+c.serviceToken)
 	req.Header.Set("Content-Type", "application/json")
 
-	_, err = c.client.Do(req)
+	_, err = c.httpClient.Do(req)
 	if err != nil {
 		return err
 	}

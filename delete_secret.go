@@ -23,7 +23,7 @@ func (c *InfisicalClient) DeleteSecret(secretKey string) error {
 	req.Header.Set("Authorization", "Bearer "+c.serviceToken)
 	req.Header.Set("Content-Type", "application/json")
 
-	res, err := c.client.Do(req)
+	res, err := c.httpClient.Do(req)
 	if err != nil {
 		return err
 	}
