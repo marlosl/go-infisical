@@ -7,7 +7,7 @@ import (
 )
 
 func TestEncrypt(t *testing.T) {
-	key := []byte("mysecret")
+	key, _ := GenerateNewKey()
 	plaintext := []byte("hello world")
 
 	encryptionResult, err := Encrypt(plaintext, key)
@@ -20,7 +20,7 @@ func TestEncrypt(t *testing.T) {
 }
 
 func TestDecrypt(t *testing.T) {
-	key := []byte("mysecret")
+	key, _ := GenerateNewKey()
 	plaintext := []byte("hello world")
 
 	encryptionResult, err := Encrypt(plaintext, key)

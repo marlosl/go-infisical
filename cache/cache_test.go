@@ -30,7 +30,7 @@ func TestCache(t *testing.T) {
 	err = cache.Update("key2", "value2")
 	assert.NoError(t, err)
 
-	time.Sleep(2 * time.Hour)
+	time.Sleep(10 * time.Second)
 
 	value, err = cache.Read("key2")
 	assert.Error(t, err)
