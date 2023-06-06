@@ -9,12 +9,12 @@ import (
 )
 
 func (c *InfisicalClient) UpdateSecret(secretKey, secretValue, secretComment string) error {
-	encryptedKey, err := Encrypt(secretKey, c.projectKey)
+	encryptedKey, err := c.encrypt(secretKey, c.projectKey)
 	if err != nil {
 		return err
 	}
 
-	encryptedValue, err := Encrypt(secretValue, c.projectKey)
+	encryptedValue, err := c.encrypt(secretValue, c.projectKey)
 	if err != nil {
 		return err
 	}
@@ -30,7 +30,7 @@ func (c *InfisicalClient) UpdateSecret(secretKey, secretValue, secretComment str
 	}
 
 	if len(secretComment) > 0 {
-		encryptedCommentData, err := Encrypt(secretComment, c.projectKey)
+		encryptedCommentData, err := c.encrypt(secretComment, c.projectKey)
 		if err != nil {
 			panic(err)
 		}

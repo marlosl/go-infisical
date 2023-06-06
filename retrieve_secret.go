@@ -31,7 +31,7 @@ func (c *InfisicalClient) GetSecret(secretKey string) (string, error) {
 
 	encryptedSecret := secretData["secret"].(map[string]interface{})
 
-	secretValue, err := Decrypt(
+	secretValue, err := c.decrypt(
 		encryptedSecret["secretValueCiphertext"].(string),
 		encryptedSecret["secretValueIV"].(string),
 		encryptedSecret["secretValueTag"].(string),
@@ -85,7 +85,7 @@ func (c *InfisicalClient) GetSecrets() (map[string]string, error) {
 	for _, encryptedSecret := range encryptedSecrets {
 		secret := encryptedSecret.(map[string]interface{})
 
-		secretKey, err := Decrypt(
+		secretKey, err := c.decrypt(
 			secret["secretKeyCiphertext"].(string),
 			secret["secretKeyIV"].(string),
 			secret["secretKeyTag"].(string),
@@ -95,7 +95,7 @@ func (c *InfisicalClient) GetSecrets() (map[string]string, error) {
 			return nil, err
 		}
 
-		secretValue, err := Decrypt(
+		secretValue, err := c.decrypt(
 			secret["secretValueCiphertext"].(string),
 			secret["secretValueIV"].(string),
 			secret["secretValueTag"].(string),

@@ -75,7 +75,7 @@ func (c *InfisicalClient) InitService() error {
 	c.workspace = serviceTokenData["workspace"].(string)
 	c.environment = serviceTokenData["environment"].(string)
 
-	projectKey, err := Decrypt(
+	projectKey, err := c.decrypt(
 		c.encryptedKey,
 		c.iv,
 		c.tag,

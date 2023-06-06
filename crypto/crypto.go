@@ -72,3 +72,9 @@ func Encrypt(plaintext []byte, key []byte) (result EncryptionResult, err error) 
 		Nonce:      nonce,
 	}, nil
 }
+
+func GenerateNewKey() (newKey []byte, keyErr error) {
+	key := make([]byte, BlocksizeBytes)
+	_, err := rand.Read(key)
+	return key, err
+}

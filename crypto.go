@@ -17,7 +17,7 @@ type EncryptionData struct {
 	IV         string `json:"iv"`
 }
 
-func Encrypt(text string, secret string) (*EncryptionData, error) {
+func (c *InfisicalClient) encrypt(text string, secret string) (*EncryptionData, error) {
 	key := []byte(secret)
 	plaintext := []byte(text)
 
@@ -35,7 +35,7 @@ func Encrypt(text string, secret string) (*EncryptionData, error) {
 	return encryptionData, nil
 }
 
-func Decrypt(ciphertext string, iv string, tag string, secret string) (string, error) {
+func (c *InfisicalClient) decrypt(ciphertext string, iv string, tag string, secret string) (string, error) {
 	secretKey := []byte(secret)
 
 	decodedCiphertext, err := base64.StdEncoding.DecodeString(ciphertext)
